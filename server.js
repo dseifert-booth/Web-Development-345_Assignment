@@ -9,11 +9,11 @@ function onHttpStart() {
 }
 
 app.get("/", function(req, res) {
-    res.send("Hello World <br /><a href='/about'>Go to the about page</a>");
+    res.send("Hello World <br /><a href='/listing'>Go to the listing page</a>");
 });
 
-// app.get("/about", function(req,res) {
-//     res.sendFile(path.join(__dirname, "views/about.html"));
-// });
+app.get("/listing", function(req,res) {
+    res.sendFile(path.join(__dirname, "views/listing.html"));
+});
 
 app.listen(HTTP_PORT, onHttpStart);
