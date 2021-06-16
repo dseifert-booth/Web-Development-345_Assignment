@@ -1,0 +1,24 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+
+    color: black;
+
+    background-image: url("../images/ddc7f01f-3fb3-483c-87e6-701dad52c930.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#covid-banner {
+    width: 100vw;
+    padding: 20px 0;
+
+    background-color: #222222;
+    
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    color: #A3A3A3;
+}
