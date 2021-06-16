@@ -8,7 +8,7 @@ function onHttpStart() {
     console.log("Express Server is listening on :" + HTTP_PORT)
 }
 
-app.use(express.static('static'));
+app.use(express.static(path.join(__dirname, 'static')));
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "src/index.html"));
