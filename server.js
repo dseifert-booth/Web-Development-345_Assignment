@@ -8,12 +8,16 @@ function onHttpStart() {
     console.log("Express Server is listening on :" + HTTP_PORT)
 }
 
-app.get("/", function(req, res) {
-    res.send("Hello World <br /><a href='/listing'>Go to the listing page</a>");
+app.get("/src/index.html", function(req, res) {
+    res.sendFile(path.join(__dirname, "src/index.html"));
 });
 
-app.get("/listing", function(req,res) {
-    res.sendFile(path.join(__dirname, "views/listing.html"));
+app.get("/src/listing.html", function(req, res) {
+    res.sendFile(path.join(__dirname, "src/listing.html"));
+});
+
+app.get("/src/register.html", function(req, res) {
+    res.sendFile(path.join(__dirname, "src/register.html"));
 });
 
 app.listen(HTTP_PORT, onHttpStart);
