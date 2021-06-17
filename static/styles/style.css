@@ -7,18 +7,86 @@ body {
     background-image: url("../images/ddc7f01f-3fb3-483c-87e6-701dad52c930.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+
+    font-size: 20px;
 }
+
 
 #covid-banner {
     width: 100vw;
     padding: 20px 0;
 
+    font-size: 16px;    
     background-color: #222222;
     
     display: flex;
     justify-content: center;
 }
 
-a {
+#covid-banner>a {
     color: #A3A3A3;
+}
+
+#nav-area {
+    margin: 40px 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#logo {
+    display: flex;
+    justify-content: center;
+}
+
+#logo>p {
+    margin: 10px;
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.fa-airbnb {
+    font-size: 40px;
+}
+
+nav {
+    padding-left: 80px;
+}
+
+#host-language-signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#signin {
+    display: flex;
+    align-items: center;
+}
+
+#signin>* {
+    margin: 0 5px;
+}
+
+nav>a {
+    color: #000;
+    text-decoration: none;
+}
+
+nav>p {
+    text-decoration: underline;
+}
+
+#host-language-signin>* {
+    margin: 12px;
+    font-size: 16px;
+}
+
+.fa-user-circle {
+    font-size: 30px;
+}
+
+nav>* {
+    display: inline-block;
+    margin: 0 30px;
 }
