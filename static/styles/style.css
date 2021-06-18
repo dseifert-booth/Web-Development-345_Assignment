@@ -32,6 +32,7 @@ h4 {
 h1 {
     font-size: 3em;
     line-height: 0.8;
+    text-align: center;
 }
 
 h2 {
@@ -160,7 +161,11 @@ nav>* {
     margin-bottom: 80px;
 }
 
-
+#promotional>h1 {
+    text-align: unset;
+    font-size: 3em;
+    line-height: 0.8;
+}
 
 #promotional>a {
     background-color: #222;
@@ -224,6 +229,9 @@ input {
 
 #book-submit {
     width: 25%;
+}
+
+.submit {
     border-color: #FF5A5F;
     background-color: #FF5A5F;
 }
@@ -307,13 +315,7 @@ footer {
     margin-bottom: 30px;
 }
 
-#listing>h1,
-#register>h1 {
-    text-align: center;
-}
-
-#listing-master,
-#register-master {
+#listing-master {
     padding-top: 50px;
 
     display: flex;
@@ -385,20 +387,25 @@ footer {
 /* Register Styles */
 /*-----------------*/
 
-#register {
+#register,
+#full-signin {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#register p {
+#register p,
+#full-signin p {
     color: #555;
     font-size: 14px;
 }
 
-#register-master {
+#register-master,
+#signin-master {
     width: 30%;
+    padding-top: 50px;
 
+    display: flex;
     flex-direction: column;
 }
 
@@ -423,7 +430,8 @@ footer {
     padding: 0 15px;
 }
 
-#signup-form {
+#signup-form,
+#signin-form {
     border-top: solid 1px #DDD;
     padding-top: 25px;
 
@@ -457,3 +465,7 @@ footer {
 #year {
     width: 33%;
 }
+
+/*----------------*/
+/* Sign-in Styles */
+/*----------------*/
