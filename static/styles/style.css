@@ -440,3 +440,20 @@ footer {
     border-color: #FF5A5F;
     background-color: #FF5A5F;
 }
+
+#birthday-select {
+    display: flex;
+    justify-content: space-between;
+}
+
+#month {
+    width: 40%;
+}
+
+#day {
+    width: 22%;
+}
+
+#year {
+    width: 33%;
+}
