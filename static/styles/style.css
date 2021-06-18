@@ -222,7 +222,7 @@ input {
     width: 50%;
 }
 
-#inp-submit {
+#book-submit {
     width: 25%;
     border-color: #FF5A5F;
     background-color: #FF5A5F;
@@ -307,15 +307,20 @@ footer {
     margin-bottom: 30px;
 }
 
-#listing>h1 {
+#listing>h1,
+#register>h1 {
     text-align: center;
 }
 
-#listing-master {
+#listing-master,
+#register-master {
     padding-top: 50px;
 
     display: flex;
     justify-content: center;
+}
+
+#listing-master {
     flex-wrap: wrap;
 }
 
@@ -374,4 +379,64 @@ footer {
 .rating {
     font-weight: bold;
     color: #444;
+}
+
+/*-----------------*/
+/* Register Styles */
+/*-----------------*/
+
+#register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#register p {
+    color: #555;
+    font-size: 14px;
+}
+
+#register-master {
+    width: 30%;
+
+    flex-direction: column;
+}
+
+
+.center {
+    text-align: center;
+    font-weight: bold;
+}
+
+.center>a {
+    color: #178F93;
+}
+
+.positioned {
+    display: inline;
+    position: relative;
+    z-index: 2;
+}
+
+.positioned>span {
+    background-color: #FFF;
+    padding: 0 15px;
+}
+
+#signup-form {
+    border-top: solid 1px #DDD;
+    padding-top: 25px;
+
+    position: relative;
+    top: -22px;
+    z-index: 1;
+}
+
+#signup-form>label {
+    font-size: 18px;
+    text-transform: capitalize;
+}
+#signup-submit {
+    border-color: #FF5A5F;
+    background-color: #FF5A5F;
 }
