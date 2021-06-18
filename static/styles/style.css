@@ -298,3 +298,80 @@ footer {
 .footer-bar>i {
     font-size: 18px;
 }
+
+/*----------------*/
+/* Listing Styles */
+/*----------------*/
+
+#listing {
+    margin-bottom: 30px;
+}
+
+#listing>h1 {
+    text-align: center;
+}
+
+#listing-master {
+    padding-top: 50px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.room-card {
+    width: 25%;
+    margin: 0.5%;
+}
+
+.room-card>img {
+    width: 100%;
+}
+
+.card-details,
+.rating-details {
+    color: #777;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.rating-details {
+    flex-direction: unset;
+}
+
+.card-details>*,
+.rating-details>* {
+    margin: 1px;
+}
+
+.card-details>h4 {
+    font-size: 24px;
+    color: #444;
+}
+
+.card-details>:first-child {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.plus {
+    color: #91486B;
+}
+
+.plus>span {
+    color: #FFF;
+    background-color: #91486B;
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+
+.fa-star {
+    color: #0B7F7A;
+}
+
+.rating {
+    font-weight: bold;
+    color: #444;
+}
