@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>User Registration</title>
+        <title>Sign In</title>
         <link rel="stylesheet" type="text/css" href="/styles/style.css" />
         <script src="https://kit.fontawesome.com/0c5d9ba0ef.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <main id="register-page">
+        <main id="signin-page">
             <div id="covid-banner">
                 <a href="#">Get the latest on our COVID-19 response</a>
             </div>
@@ -19,7 +19,7 @@
                     <nav>
                         <a href="/src/index.html">Home</a>
                         <a href="/src/listing.html">Listing Page</a>
-                        <p>Register Page</p>
+                        <a href="/src/register.html">Register Page</a>
                     </nav>
                     <aside id="host-language-signin">
                         <p>Become a Host</p>
@@ -31,36 +31,7 @@
                     </aside>
                 </div>
             </header>
-            <div class="main-body">
-                <section id="register">
-                    <h1>Sign Up for Airbnb</h1>
-                    <div id="register-master">
-                        <p class="center">Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
-                        <p class="center positioned"><span>or</span></p>
-                        <form id="signup-form" action="POST">
-                            <input type="email" id="email" name="email" placeholder="Email address">
-                            <input type="text" id="fname" name="fname" placeholder="First name">
-                            <input type="text" id="lname" name="lname" placeholder="Last name">
-                            <input type="password" id="password" name="password" placeholder="Create a Password">
-                            <label for="month">Birthday</label>
-                            <p>To sign up, you need to be at least 18. Other people who use Airbnb won't see your birthday.</p>
-                            <div id="birthday-select">
-                                <select name="month" id="month">
-                                    <option value="month" selected>Month</option>
-                                </select>
-                                <select name="day" id="day">
-                                    <option value="day" selected>Day</option>
-                                </select>
-                                <select name="year" id="year">
-                                    <option value="year" selected>Year</option>
-                                </select>
-                            </div>
-                            <p>We'll send you marketing promotions, special offers, inspiration, and policy updates via email</p>
-                            <input id="signup-submit" type="submit" value="Sign Up">
-                        </form>
-                    </div>
-                </section>
-            </div>
+
             <footer>
                 <div id="footer-left">
                     <p>© 2021 Airbnb, Inc.</p>

@@ -26,6 +26,10 @@ app.get("/src/register.html", function(req, res) {
     res.sendFile(path.join(__dirname, "src/register.html"));
 });
 
+app.get("/src/signin.html", function(req, res) {
+    res.sendFile(path.join(__dirname, "src/signin.html"));
+});
+
 app.use((req,res) => {
     res.status(404).send("Page Not Found");
 });
