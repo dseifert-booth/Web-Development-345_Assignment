@@ -9,15 +9,17 @@ body {
 
     color: black;
 
-    background-image: url("../images/ddc7f01f-3fb3-483c-87e6-701dad52c930.jpg");
-    background-size:contain;
-    background-repeat: no-repeat;
-
     font-size: 20px;
 }
 
+#home-page {
+    background-image: url("../images/homepage-cover.jpg");
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+
 header,
-main,
+.main-body,
 footer {
     padding: 0 80px;
 }
@@ -133,7 +135,7 @@ nav>* {
 /* Main Styles */
 /*-------------*/
 
-main {
+.main-body {
     display: flex;
     flex-direction: column;
     align-content: space-between;
