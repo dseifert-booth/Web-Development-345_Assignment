@@ -1,6 +1,10 @@
 var express = require('express');
+const exphbs = require('express-handlebars');
 var app = express();
 var path = require("path");
+
+app.engine('.hbs', exphbs({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
