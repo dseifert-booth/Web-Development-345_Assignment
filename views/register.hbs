@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Registration</title>
+        <link rel="stylesheet" type="text/css" href="/styles/style.css" />
+        <script src="https://kit.fontawesome.com/0c5d9ba0ef.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <main id="register-page">
+            <div id="covid-banner">
+                <a href="#">Get the latest on our COVID-19 response</a>
+            </div>
+            <header>
+                <div id="nav-area">
+                    <div id="logo">
+                        <i class="fab fa-airbnb"></i>
+                        <p>airbnb</p>
+                    </div>
+                    <nav>
+                        <a href="/index">Home</a>
+                        <a href="/listing">Listing Page</a>
+                        <p>Register Page</p>
+                    </nav>
+                    <aside id="host-language-signin">
+                        <p>Become a Host</p>
+                        <i class="fas fa-globe"></i>
+                        <div id="signin">
+                            <i class="fas fa-bars"></i>
+                            <a href="/signin"><i class="fas fa-user-circle"></i></a>
+                        </div>
+                    </aside>
+                </div>
+            </header>
+            <div class="main-body">
+                <section id="register">
+                    <h1>Sign Up for Airbnb</h1>
+                    <div id="register-master">
+                        <p class="center">Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
+                        <p class="center positioned"><span>or</span></p>
+                        <form id="signup-form" action="/register-user" method="POST">
+                            {{#if data.email}}
+                                <p class="error">**Email address required</p>
+                            {{/if}}
+                            <input type="email" id="email" name="email" placeholder="Email address">
+                            {{#if data.fname}}
+                                <p class="error">**First name required</p>
+                            {{/if}}
+                            <input type="text" id="fname" name="fname" placeholder="First name">
+                            {{#if data.lname}}
+                                <p class="error">**Last name required</p>
+                            {{/if}}
+                            <input type="text" id="lname" name="lname" placeholder="Last name">
+                            {{#if data.password1}}
+                                <p class="error">**Password Required</p>
+                            {{/if}} 
+                            {{#if data.password2}}
+                                <p class="error">**Password must be between 6-12 characters</p>
+                            {{/if}}
+                            {{#if data.password3}}
+                                <p class="error">Password must have only letters AND numbers</p>
+                            {{/if}}
+                            <input type="password" id="password" name="password" placeholder="Create a Password">
+                            <label for="month">Birthday</label>
+                            <p>To sign up, you need to be at least 18. Other people who use Airbnb won't see your birthday.</p>
+                            {{#if data.email}}
+                                <p class="error">Month/Day/Year required</p>
+                            {{/if}}
+                            <div id="birthday-select">
+                                <select name="month" id="month">
+                                    <option value="month" selected>Month</option>
+                                    <option value="jan">January</option>
+                                </select>
+                                <select name="day" id="day">
+                                    <option value="day" selected>Day</option>
+                                    <option value="1">1</option>
+                                </select>
+                                <select name="year" id="year">
+                                    <option value="year" selected>Year</option>
+                                    <option value="2000">2000</option>
+                                </select>
+                            </div>
+                            <p>We'll send you marketing promotions, special offers, inspiration, and policy updates via email</p>
+                            <input class="submit" id="signup-submit" type="submit" value="Sign Up">
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <footer>
+                <div id="footer-left">
+                    <p>© 2021 Airbnb, Inc.</p>
+                    <p>Privacy</p>
+                    <p>Terms</p>
+                    <p>Sitemap</p>
+                </div>
+                <div id="footer-right">
+                    <div class="footer-bar" id="language">
+                        <i class="fas fa-globe"></i>
+                        <p>English (CA)</p>
+                    </div>
+                    <div class="footer-bar" id="currency">
+                        <p>$ <span>CAD</span></p>
+                    </div>
+                    <div class="footer-bar" id="socials">
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </body>
+</html>

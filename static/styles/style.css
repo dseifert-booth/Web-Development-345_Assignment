@@ -440,6 +440,11 @@ footer {
     z-index: 1;
 }
 
+#signup-form .error {
+    margin: 0;
+    color: #F22;
+}
+
 #signup-form>label {
     font-size: 18px;
     text-transform: capitalize;
