@@ -472,6 +472,108 @@ footer {
     width: 33%;
 }
 
-/*----------------*/
-/* Sign-in Styles */
-/*----------------*/
+/*-----------------------*/
+/*-----------------------*/
+/*                       */
+/*   Responsive Styles   */
+/*                       */
+/*-----------------------*/
+/*-----------------------*/
+
+/*-----------------------*/
+/*     Tablet Styles     */
+/*-----------------------*/
+
+@media only screen and (max-width: 1024px) {
+    
+    /* General Styles */
+
+    header, .main-body, footer {
+        padding: 0 40px;
+    }
+
+    h3 {
+        margin: 0.5em 0;
+        font-size: 1.3em;
+    }
+
+    /* Header Styles */
+
+    #covid-banner {
+        padding: 10px 0;
+    }
+
+    #nav-area {
+        margin: 10px 0;
+    }
+
+    nav>* {
+        margin: 0 15px;
+    }
+
+    #host-language-login>* {
+        margin: 5px;
+    }
+
+    /* Homepage Styles */
+
+    #home-page {
+        background-image: "../images/homepage-cover-tablet.jpg";
+    }
+
+    #promote-booking {
+        margin-bottom: 50px;
+    }
+
+    #promotional {
+        margin-top: 65px;
+    }
+
+    #booking {
+        width: 40%;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    select,
+    input {
+        font-size: 0.8em;
+    }
+
+    #info-text,
+    #info-media {
+        width: 45%;
+    }
+
+    img, video {
+        width: 100%;
+    }
+
+    /* Listing Styles */
+
+    .room-card {
+        width: 30%;
+        margin: 0.5% 1%;
+    }
+
+    /* Footer Styles */
+
+    #footer-left {
+        width: 30%;
+    }
+
+    #footer-right {
+        width: 40%;
+    }
+
+}
+
+@media only screen and (min-width: 400px) {
+
+    #home-page {
+        background-image: "../images/homepage-cover-phone.jpg";
+    }
+
+}
