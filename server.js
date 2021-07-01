@@ -57,7 +57,6 @@ var User = {
 
 app.post("/register-user", function(req, res) {
     const formData = req.body;
-    var valid = val.validateForm(formData);
     
     var errorData = {
         email: false,
@@ -66,42 +65,18 @@ app.post("/register-user", function(req, res) {
         password1: false,
         password2: false,
         password3: false,
-        bday: false,
+        bday: false
     }
 
-    if (valid.every(val.checkValid) == false) {
-        if (valid[0]) {
-            errorData.email = true;
-        }
-        if (valid[1]) {
-            errorData.fname = true;
-        }
-        if (valid[2]) {
-            errorData.lname = true;
-        }
-
-        if (valid[3]) {
-            if (valid[3] == 1) {
-                errorData.password1 = true;
-            } else if (valid[3] == 2) {
-                errorData.password2 = true;
-            } else if (valid[3] == 3) {
-                errorData.password3 = true;
-            }
-        }
-
-        if (valid[4] ||
-            valid[5] ||
-            valid[6]) {
-                errorData.bday = true;
-        }
-
-        res.render("register", {
-            data: errorData,
+    errorData = val.validateForm(formData, errorData);
+    
+    if (val.checkValid(errorData)) {
+        res.render("index", {
             layout: false
         });
     } else {
-        res.render("index", {
+        res.render("register", {
+            data: errorData,
             layout: false
         });
     }

@@ -1,28 +1,36 @@
-function validateForm(body) {
-    var valid = [0,0,0,0,0,0,0];
+function validateForm(body, error) {
     const charRegex = /[a-zA-Z]+/;
     const numRegex = /[0-9]+/;
     const sizeRegex = /.{6,}/
 
-    if (body.email == "") { valid[0] = 1;}
-    if (body.fname == "") {valid[1] = 1;}
-    if (body.lname == "") {valid[2] = 1;}
+    if (body.email == "") { error.email = true;}
+    if (body.fname == "") {error.fname = true;}
+    if (body.lname == "") {error.lname = true;}
 
-    if (body.password == "") {valid[3] = 1;} 
+    if (body.password == "") {error.password1 = true;} 
     else {
-        if (body.password.length > 12 || sizeRegex.test(body.password) == false) { valid[3] = 2;} 
-        else if(charRegex.test(body.password) == false || numRegex.test(body.password) == false) {valid[3] = 3;}
+        if (body.password.length > 12 || sizeRegex.test(body.password) == false) {error.password2 = true;} 
+        else if(charRegex.test(body.password) == false || numRegex.test(body.password) == false) {error.password3 = true;}
     }
     
-    if (body.month == "month") {valid[4] = 1;}
-    if (body.day == "day") {valid[5] = 1;}
-    if (body.year == "year") {valid[6] = 1;}
+    if (body.month == "month") {error.bday = true;}
+    if (body.day == "day") {error.bday = true;}
+    if (body.year == "year") {error.bday = true;}
 
-    return valid;
+    return error;
 }
 
-function checkValid(value) {
-    return value == 0;
+function checkValid(error) {
+    var valid = true;
+
+    for (var key in error) {
+        if (error[key] == true) {
+            valid = false;
+            break;
+        }
+    }
+
+    return valid;
 }
 
 module.exports = {
