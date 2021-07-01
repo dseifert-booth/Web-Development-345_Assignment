@@ -85,8 +85,8 @@ app.get("/login", function(req, res) {
 app.post("/signin", function(req, res) {
     const formData = req.body;
     var errorData = {
-        email = false,
-        password = false
+        email: false,
+        password: false
     }
 
     errorData = val.validateLogin(formData, errorData);

@@ -99,18 +99,18 @@ nav {
     padding-left: 80px;
 }
 
-#host-language-signin {
+#host-language-login {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#signin {
+#login {
     display: flex;
     align-items: center;
 }
 
-#signin>* {
+#login>* {
     margin: 0 5px;
 }
 
@@ -118,7 +118,7 @@ nav>p {
     text-decoration: underline;
 }
 
-#host-language-signin>* {
+#host-language-login>* {
     margin: 12px;
     font-size: 16px;
 }
@@ -388,20 +388,20 @@ footer {
 /*-----------------*/
 
 #register,
-#full-signin {
+#full-login {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #register p,
-#full-signin p {
+#full-login p {
     color: #555;
     font-size: 14px;
 }
 
 #register-master,
-#signin-master {
+#login-master {
     width: 30%;
     padding-top: 50px;
 
@@ -431,7 +431,7 @@ footer {
 }
 
 #signup-form,
-#signin-form {
+#login-form {
     border-top: solid 1px #DDD;
     padding-top: 25px;
 
@@ -440,7 +440,8 @@ footer {
     z-index: 1;
 }
 
-#signup-form .error {
+#signup-form .error,
+#login-form .error {
     margin: 0;
     color: #F22;
 }

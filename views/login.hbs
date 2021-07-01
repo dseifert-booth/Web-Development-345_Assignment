@@ -37,7 +37,7 @@
                     <div id="login-master">
                         <p class="center">Log in with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                         <p class="center positioned"><span>or</span></p>
-                        <form id="login-form" action="/signin" method="GET">
+                        <form id="login-form" action="/signin" method="POST">
                             {{#if data.email}}
                                 <p class="error">**Email address required</p>
                             {{/if}}
