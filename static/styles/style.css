@@ -518,7 +518,7 @@ footer {
     /* Homepage Styles */
 
     #home-page {
-        background-image: "../images/homepage-cover-tablet.jpg";
+        background-image: url("../images/homepage-cover-tablet.jpg");
     }
 
     #promote-booking {
@@ -570,10 +570,102 @@ footer {
 
 }
 
-@media only screen and (min-width: 400px) {
+/*----------------------*/
+/*     Phone Styles     */
+/*----------------------*/
+
+@media only screen and (max-width: 400px) {
+
+    /* General Styles */
+
+    body {
+        font-size: 14px;
+    }
+
+    header, .main-body, footer {
+        padding: 0 20px;
+    }
+
+    /* Header Styles */
+
+    #nav-area {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    #logo {
+        order: 1;
+    }
+
+    #host-language-login {
+        order: 2;
+    }
+
+    nav {
+        margin: 10px 0;
+        padding: 0;
+        order: 3;
+    }
+
+    /* Homepage Styles */
 
     #home-page {
-        background-image: "../images/homepage-cover-phone.jpg";
+        background-image: url("../images/homepage-cover-phone.jpg");
+    }
+
+    #promote-booking {
+        margin-bottom: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #promotional {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        width: 50%;
+    }
+
+    #booking {
+        width: 70%;
+    }
+
+    #info-master {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #info-text {
+        width: 90%;
+    }
+
+    #info-media {
+        width: 100%;
+    }
+
+    /* Listing Styles */
+
+    .room-card {
+        width: 100%;
+    }
+
+    /* Register Styles */
+
+    #register-master,
+    #login-master {
+        width: 90%;
+    }
+
+    /* Footer Styles */
+
+    footer {
+        margin-bottom: 10px;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #footer-left,
+    #footer-right {
+        width: 100%;
     }
 
 }
