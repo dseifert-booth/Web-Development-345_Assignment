@@ -4,6 +4,8 @@ var app = express();
 var path = require("path");
 var val = require("./validate.js");
 
+var signedIn = false;
+
 app.use(express.urlencoded({ extended: true }));
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
@@ -47,14 +49,6 @@ app.get("/register", function(req, res) {
     });
 });
 
-var User = {
-    email: this.email,
-    password: this.password,
-    fname: this.fname,
-    lname: this.lname,
-    birthday: this.birthday
-}
-
 app.post("/register-user", function(req, res) {
     const formData = req.body;
     
@@ -68,8 +62,8 @@ app.post("/register-user", function(req, res) {
         bday: false
     }
 
-    errorData = val.validateForm(formData, errorData);
-    
+    errorData = val.validateRegister(formData, errorData);
+
     if (val.checkValid(errorData)) {
         res.render("index", {
             layout: false
@@ -82,10 +76,31 @@ app.post("/register-user", function(req, res) {
     }
 })
 
-app.get("/signin", function(req, res) {
-    res.render("signin", {
+app.get("/login", function(req, res) {
+    res.render("login", {
         layout: false
     });
+});
+
+app.post("/signin", function(req, res) {
+    const formData = req.body;
+    var errorData = {
+        email = false,
+        password = false
+    }
+
+    errorData = val.validateLogin(formData, errorData);
+
+    if (val.checkValid(errorData)) {
+        res.render("index", {
+            layout: false
+        });
+    } else {
+        res.render("login", {
+            data: errorData,
+            layout: false
+        });
+    }
 });
 
 app.use((req,res) => {

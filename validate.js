@@ -1,4 +1,4 @@
-function validateForm(body, error) {
+function validateRegister(body, error) {
     const charRegex = /[a-zA-Z]+/;
     const numRegex = /[0-9]+/;
     const sizeRegex = /.{6,}/
@@ -20,6 +20,13 @@ function validateForm(body, error) {
     return error;
 }
 
+function validateLogin(body, error) {
+    if (body.email == "") { error.email = true;}
+    if (body.password == "") {error.password = true;} 
+
+    return error;
+}
+
 function checkValid(error) {
     var valid = true;
 
@@ -34,6 +41,7 @@ function checkValid(error) {
 }
 
 module.exports = {
-    validateForm: validateForm,
+    validateRegister: validateRegister,
+    validateLogin: validateLogin,
     checkValid: checkValid
 }

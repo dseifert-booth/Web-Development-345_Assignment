@@ -6,7 +6,7 @@
         <script src="https://kit.fontawesome.com/0c5d9ba0ef.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <main id="signin-page">
+        <main id="login-page">
             <div id="covid-banner">
                 <a href="#">Get the latest on our COVID-19 response</a>
             </div>
@@ -21,10 +21,10 @@
                         <a href="/listing">Listing Page</a>
                         <a href="/register">Register Page</a>
                     </nav>
-                    <aside id="host-language-signin">
+                    <aside id="host-language-login">
                         <p>Become a Host</p>
                         <i class="fas fa-globe"></i>
-                        <div id="signin">
+                        <div id="login">
                             <i class="fas fa-bars"></i>
                             <a href="#"><i class="fas fa-user-circle"></i></a>
                         </div>
@@ -32,15 +32,21 @@
                 </div>
             </header>
             <div class="main-body">
-                <section id="full-signin">
-                    <h1>Sign In to Your Account</h1>
-                    <div id="signin-master">
-                        <p class="center">Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
+                <section id="full-login">
+                    <h1>Log In to Your Account</h1>
+                    <div id="login-master">
+                        <p class="center">Log in with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                         <p class="center positioned"><span>or</span></p>
-                        <form id="signin-form" action="/index.html" method="GET">
+                        <form id="login-form" action="/signin" method="GET">
+                            {{#if data.email}}
+                                <p class="error">**Email address required</p>
+                            {{/if}}
                             <input type="email" id="email" name="email" placeholder="Email address">
+                            {{#if data.password}}
+                                <p class="error">**Password required</p>
+                            {{/if}}
                             <input type="password" id="password" name="password" placeholder="Create a Password">
-                            <input class="submit" id="signin-submit" type="submit" value="Sign Up">
+                            <input class="submit" id="login-submit" type="submit" value="Sign Up">
                         </form>
                     </div>
                 </section>
