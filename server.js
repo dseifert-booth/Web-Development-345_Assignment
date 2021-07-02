@@ -1,10 +1,12 @@
 var express = require('express');
 const exphbs = require('express-handlebars');
+const nodemailer = require('nodemailer');
 var app = express();
 var path = require("path");
 var val = require("./validate.js");
 
-var signedIn = false;
+// this is planned for when i will need users to be able to remain logged in
+// var signedIn = false;
 
 app.use(express.urlencoded({ extended: true }));
 app.engine('.hbs', exphbs({ 
@@ -65,6 +67,31 @@ app.post("/register-user", function(req, res) {
     errorData = val.validateRegister(formData, errorData);
 
     if (val.checkValid(errorData)) {
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'daseifertbooth@gmail.com',
+                pass: 'Nintendo34435'
+            }
+        })
+
+        const mailOptions = {
+            from: 'daseifertbooth@gmail.com',
+            to: formData.email,
+            subject: 'Welcome to Airbnb!',
+            text: 'Glad to have you, ' + formData.fname + ' ' + formData.lname + '!',
+            replyTo: 'daseifertbooth@gmail.com'
+        }
+
+        transporter.sendMail(mailOptions, function(err, res) {
+            if (err) {
+                console.error('there was an error: ', err);
+            } else {
+                console.log('here is the res: ', res)
+            }
+        })
+
         res.render("index", {
             layout: false
         });
