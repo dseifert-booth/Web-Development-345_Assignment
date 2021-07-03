@@ -119,16 +119,9 @@ app.post("/register-user", function(req, res) {
 
         signedIn = true;
 
-        res.render("index", {
-            signedIn: true,
-            layout: false
-        });
+        res.redirect("dashboard");
     } else {
-        res.render("register", {
-            signedIn: false,
-            data: errorData,
-            layout: false
-        });
+        res.redirect("register");
     }
 })
 
@@ -139,18 +132,19 @@ app.get("/dashboard", function(req, res) {
     })
 })
 
+app.get("/logout", function(req, res) {
+    signedIn = false;
+    res.redirect("index", {
+        signedIn: false,
+        layout: false
+    })
+})
+
 app.get("/login", function(req, res) {
-    if (signedIn) {
-        res.render("login", {
-            signedIn: true,
-            layout: false
-        });
-    } else {
-        res.render("login", {
-            signedIn: false,
-            layout: false
-        });
-    }
+    res.render("login", {
+        signedIn: false,
+        layout: false
+    });
 });
 
 app.post("/signin", function(req, res) {
@@ -166,16 +160,9 @@ app.post("/signin", function(req, res) {
 
         signedIn = true;
 
-        res.render("index", {
-            signedIn: true,
-            layout: false
-        });
+        res.redirect("dashboard");
     } else {
-        res.render("login", {
-            signedIn: false,
-            data: errorData,
-            layout: false
-        });
+        res.redirect("login");
     }
 });
 
