@@ -6,7 +6,7 @@ var path = require("path");
 var val = require("./validate.js");
 
 // this is planned for when i will need users to be able to remain logged in
-// var signedIn = false;
+var signedIn = false;
 
 app.use(express.urlencoded({ extended: true }));
 app.engine('.hbs', exphbs({ 
@@ -29,26 +29,51 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 app.get("/", function(req, res) {
     res.render("index", {
+        signedIn: false,
         layout: false
     });
 });
 
 app.get("/index", function(req, res) {
-    res.render("index", {
-        layout: false
-    });
+    if (signedIn) {
+        res.render("index", {
+            signedIn: true,
+            layout: false
+        });
+    } else {
+        res.render("index", {
+            signedIn: false,
+            layout: false
+        });
+    }
 });
 
 app.get("/listing", function(req, res) {
-    res.render("listing", {
-        layout: false
-    });
+    if (signedIn) {
+        res.render("listing", {
+            signedIn: true,
+            layout: false
+        });
+    } else {
+        res.render("listing", {
+            signedIn: false,
+            layout: false
+        });
+    }
 });
 
 app.get("/register", function(req, res) {
-    res.render("register", {
-        layout: false
-    });
+    if (signedIn) {
+        res.render("register", {
+            signedIn: true,
+            layout: false
+        });
+    } else {
+        res.render("register", {
+            signedIn: false,
+            layout: false
+        });
+    }
 });
 
 app.post("/register-user", function(req, res) {
@@ -92,21 +117,40 @@ app.post("/register-user", function(req, res) {
             }
         })
 
+        signedIn = true;
+
         res.render("index", {
+            signedIn: true,
             layout: false
         });
     } else {
         res.render("register", {
+            signedIn: false,
             data: errorData,
             layout: false
         });
     }
 })
 
-app.get("/login", function(req, res) {
-    res.render("login", {
+app.get("/dashboard", function(req, res) {
+    res.render("dashboard", {
+        signedIn: true,
         layout: false
-    });
+    })
+})
+
+app.get("/login", function(req, res) {
+    if (signedIn) {
+        res.render("login", {
+            signedIn: true,
+            layout: false
+        });
+    } else {
+        res.render("login", {
+            signedIn: false,
+            layout: false
+        });
+    }
 });
 
 app.post("/signin", function(req, res) {
@@ -119,11 +163,16 @@ app.post("/signin", function(req, res) {
     errorData = val.validateLogin(formData, errorData);
 
     if (val.checkValid(errorData)) {
+
+        signedIn = true;
+
         res.render("index", {
+            signedIn: true,
             layout: false
         });
     } else {
         res.render("login", {
+            signedIn: false,
             data: errorData,
             layout: false
         });

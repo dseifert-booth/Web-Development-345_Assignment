@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sign In</title>
+        <title>Dashboard</title>
         <link rel="stylesheet" type="text/css" href="/styles/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/0c5d9ba0ef.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <main id="login-page">
+        <main id="dashboard-page">
             <div id="covid-banner">
                 <a href="#">Get the latest on our COVID-19 response</a>
             </div>
@@ -20,7 +20,7 @@
                     <nav>
                         <a href="/index">Home</a>
                         <a href="/listing">Listings</a>
-                        <a href="/register">Register</a>
+                        <p>Dashboard</p>
                     </nav>
                     <aside id="host-language-login">
                         <p>Become a Host</p>
@@ -33,22 +33,10 @@
                 </div>
             </header>
             <div class="main-body">
-                <section id="full-login">
-                    <h1>Log In to Your Account</h1>
-                    <div id="login-master">
-                        <p class="center">Log in with <a href="#">Facebook</a> or <a href="#">Google</a></p>
-                        <p class="center positioned"><span>or</span></p>
-                        <form id="login-form" action="/signin" method="POST">
-                            {{#if data.email}}
-                                <p class="error">**Email address required</p>
-                            {{/if}}
-                            <input type="email" id="email" name="email" placeholder="Email address">
-                            {{#if data.password}}
-                                <p class="error">**Password required</p>
-                            {{/if}}
-                            <input type="password" id="password" name="password" placeholder="Create a Password">
-                            <input class="submit" id="login-submit" type="submit" value="Sign Up">
-                        </form>
+                <section id="dashboard">
+                    <h1>Your Dashboard</h1>
+                    <div id="dashboard-master">
+                        
                     </div>
                 </section>
             </div>

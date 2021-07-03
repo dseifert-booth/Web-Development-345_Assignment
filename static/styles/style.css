@@ -383,9 +383,9 @@ footer {
     color: #444;
 }
 
-/*-----------------*/
-/* Register Styles */
-/*-----------------*/
+/*-----------------------*/
+/* Register/Login Styles */
+/*-----------------------*/
 
 #register,
 #full-login {
@@ -470,6 +470,17 @@ footer {
 
 #year {
     width: 33%;
+}
+
+/*------------------*/
+/* Dashboard Styles */
+/*------------------*/
+
+#dashboard-master {
+    margin-top: 30px;
+    border-top: 1px solid #AAAAAA;
+
+    height: 60vh;
 }
 
 /*-----------------------*/

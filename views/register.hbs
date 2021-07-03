@@ -19,15 +19,19 @@
                     </div>
                     <nav>
                         <a href="/index">Home</a>
-                        <a href="/listing">Listing Page</a>
-                        <p>Register Page</p>
+                        <a href="/listing">Listings</a>
+                        <p>Register</p>
                     </nav>
                     <aside id="host-language-login">
                         <p>Become a Host</p>
                         <i class="fas fa-globe"></i>
                         <div id="login">
                             <i class="fas fa-bars"></i>
-                            <a href="/login"><i class="fas fa-user-circle"></i></a>
+                            {{#if signedIn}}
+                                <a href="/dashboard"><i class="fas fa-user-circle"></i></a>
+                            {{else}}
+                                <a href="/login"><i class="fas fa-user-circle"></i></a>
+                            {{/if}}
                         </div>
                     </aside>
                 </div>
