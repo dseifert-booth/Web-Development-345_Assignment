@@ -585,7 +585,7 @@ footer {
 /*     Phone Styles     */
 /*----------------------*/
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
 
     /* General Styles */
 
@@ -669,9 +669,10 @@ footer {
     /* Footer Styles */
 
     footer {
+        height: 70px;
         margin-bottom: 10px;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     #footer-left,

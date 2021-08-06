@@ -2,11 +2,49 @@ var express = require('express');
 const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 var app = express();
-var path = require("path");
-var val = require("./validate.js");
+var path = require('path');
+var mongoose = require('mongoose');
+var bcrypt = require('bcryptjs');
+var Schema = mongoose.Schema;
 
-// this is planned for when i will need users to be able to remain logged in
+var val = require("./validate.js");
+var user = require("./user.js");
+var route = require("./routes/routes.js");
+
+mongoose.connect("mongodb+srv://dseifert-booth:Nintendo!34435@senecaweb322.qt5gp.mongodb.net/web322_assignment?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+
 var signedIn = false;
+var errorData = {
+    email1: false,
+    email2: false,
+    fname: false,
+    lname: false,
+    password0: false,
+    password1: false,
+    password2: false,
+    password3: false,
+    bday: false
+}
+
+// var userSchema = new Schema({
+//     "email": {
+//         "type": String,
+//         "unique": true
+//     },
+//     "firstName": String,
+//     "lastName": String,
+//     "password": String,
+//     "birthday": String,
+//     "admin": {
+//         "type": Number,
+//         "default": 0
+//     }
+// })
+
+//var User = mongoose.model("web322_assignment.users", userSchema);
 
 app.use(express.urlencoded({ extended: true }));
 app.engine('.hbs', exphbs({ 
@@ -28,6 +66,7 @@ function onHttpStart() {
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.get("/", function(req, res) {
+    val.setEmpty(errorData);
     res.render("index", {
         signedIn: false,
         layout: false
@@ -35,63 +74,60 @@ app.get("/", function(req, res) {
 });
 
 app.get("/index", function(req, res) {
-    if (signedIn) {
-        res.render("index", {
-            signedIn: true,
-            layout: false
-        });
-    } else {
-        res.render("index", {
-            signedIn: false,
-            layout: false
-        });
-    }
+    val.setEmpty(errorData);
+    route.load(res, signedIn, "index");
 });
 
 app.get("/listing", function(req, res) {
-    if (signedIn) {
-        res.render("listing", {
-            signedIn: true,
-            layout: false
-        });
-    } else {
-        res.render("listing", {
-            signedIn: false,
-            layout: false
-        });
-    }
+    val.setEmpty(errorData);
+    route.load(res, signedIn, "listing");
 });
 
 app.get("/register", function(req, res) {
-    if (signedIn) {
-        res.render("register", {
-            signedIn: true,
-            layout: false
-        });
-    } else {
-        res.render("register", {
-            signedIn: false,
-            layout: false
-        });
-    }
+    val.setEmpty(errorData);
+    res.render("register", {
+        signedIn: false,
+        layout: false
+    })
 });
 
 app.post("/register-user", function(req, res) {
+    val.setEmpty(errorData);
     const formData = req.body;
     
-    var errorData = {
-        email: false,
-        fname: false,
-        lname: false,
-        password1: false,
-        password2: false,
-        password3: false,
-        bday: false
-    }
-
     errorData = val.validateRegister(formData, errorData);
 
+    if (!errorData.email1) {
+        User.find({email: formData.email})
+        .exec()
+        .then((user) => {
+            if (user) {
+                errorData.email2 = true;
+            }
+        })
+    }
+    
     if (val.checkValid(errorData)) {
+
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(formData.password, salt);
+
+        var newUser = new User({
+            email: formData.email,
+            firstName: formData.fname,
+            lastName: formData.lname,
+            password: hash,
+            birthday: formData.month + " " + formData.day + ", " + formData.year
+        })
+
+        newUser.save((err) => {
+            if (err) {
+                console.log(`There was an error saving ` + newUser.firstName + `'s account ${err}`)
+            } else {
+                console.log(newUser.firstName + "'s account was saved to the database.")
+            }
+            process.exit();
+        })
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -121,11 +157,16 @@ app.post("/register-user", function(req, res) {
 
         res.redirect("dashboard");
     } else {
-        res.redirect("register");
+        res.render("register", {
+            data: errorData,
+            signedIn: false,
+            layout: false
+        })
     }
 })
 
 app.get("/dashboard", function(req, res) {
+    val.setEmpty(errorData);
     res.render("dashboard", {
         signedIn: true,
         layout: false
@@ -134,35 +175,44 @@ app.get("/dashboard", function(req, res) {
 
 app.get("/logout", function(req, res) {
     signedIn = false;
-    res.redirect("index", {
-        signedIn: false,
-        layout: false
-    })
+    res.redirect("index")
 })
 
 app.get("/login", function(req, res) {
+    val.setEmpty(errorData);
     res.render("login", {
         signedIn: false,
         layout: false
-    });
+    })
 });
 
 app.post("/signin", function(req, res) {
+    val.setEmpty(errorData);
     const formData = req.body;
-    var errorData = {
-        email: false,
-        password: false
-    }
+    var admin = false;
 
     errorData = val.validateLogin(formData, errorData);
 
+    if (!errorData.email1) {
+        user.findUser(formData.email, errorData);
+        user.checkPassword(formData.email, formData.password, errorData)
+        console.log("After finding user: ");
+        console.log(errorData);
+    }
+
+    console.log("After error checks: ");
+    console.log(errorData);
+
     if (val.checkValid(errorData)) {
-
-        signedIn = true;
-
+        //console.log(errorData);
         res.redirect("dashboard");
     } else {
-        res.redirect("login");
+        console.log("Errors found");
+        res.render("login", {
+            data: errorData,
+            signedIn: false,
+            layout: false
+        })
     }
 });
 

@@ -43,8 +43,11 @@
                         <p class="center">Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                         <p class="center positioned"><span>or</span></p>
                         <form id="signup-form" action="/register-user" method="POST">
-                            {{#if data.email}}
+                            {{#if data.email1}}
                                 <p class="error">**Email address required</p>
+                            {{/if}}
+                            {{#if data.email2}}
+                                <p class="error">**Email address was not unique</p>
                             {{/if}}
                             <input type="email" id="email" name="email" placeholder="Email address">
                             {{#if data.fname}}
@@ -67,21 +70,21 @@
                             <input type="password" id="password" name="password" placeholder="Create a Password">
                             <label for="month">Birthday</label>
                             <p>To sign up, you need to be at least 18. Other people who use Airbnb won't see your birthday.</p>
-                            {{#if data.email}}
+                            {{#if data.bday}}
                                 <p class="error">Month/Day/Year required</p>
                             {{/if}}
                             <div id="birthday-select">
                                 <select name="month" id="month">
                                     <option value="month" selected>Month</option>
-                                    <option value="jan">January</option>
+                                    {{> month}}
                                 </select>
                                 <select name="day" id="day">
                                     <option value="day" selected>Day</option>
-                                    <option value="1">1</option>
+                                    {{> day}}
                                 </select>
                                 <select name="year" id="year">
                                     <option value="year" selected>Year</option>
-                                    <option value="2000">2000</option>
+                                    {{> year}}
                                 </select>
                             </div>
                             <p>We'll send you marketing promotions, special offers, inspiration, and policy updates via email</p>

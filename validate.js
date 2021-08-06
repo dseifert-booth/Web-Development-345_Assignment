@@ -3,7 +3,7 @@ function validateRegister(body, error) {
     const numRegex = /[0-9]+/;
     const sizeRegex = /.{6,}/
 
-    if (body.email == "") { error.email = true;}
+    if (body.email == "") { error.email1 = true;}
     if (body.fname == "") {error.fname = true;}
     if (body.lname == "") {error.lname = true;}
 
@@ -21,8 +21,8 @@ function validateRegister(body, error) {
 }
 
 function validateLogin(body, error) {
-    if (body.email == "") { error.email = true;}
-    if (body.password == "") {error.password = true;} 
+    if (body.email == "") { error.email1 = true;}
+    if (body.password == "") {error.password0 = true;} 
 
     return error;
 }
@@ -40,8 +40,18 @@ function checkValid(error) {
     return valid;
 }
 
+function setEmpty(error) {
+    for (var key in error) {
+        if (error[key] == true) {
+            error[key] = false;
+        }
+    }
+    return error;
+}
+
 module.exports = {
     validateRegister: validateRegister,
     validateLogin: validateLogin,
-    checkValid: checkValid
+    checkValid: checkValid,
+    setEmpty: setEmpty
 }

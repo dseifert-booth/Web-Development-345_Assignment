@@ -39,14 +39,20 @@
                         <p class="center">Log in with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                         <p class="center positioned"><span>or</span></p>
                         <form id="login-form" action="/signin" method="POST">
-                            {{#if data.email}}
+                            {{#if data.email1}}
                                 <p class="error">**Email address required</p>
                             {{/if}}
+                            {{#if data.email2}}
+                                <p class="error">**Incorrect email</p>
+                            {{/if}}
                             <input type="email" id="email" name="email" placeholder="Email address">
-                            {{#if data.password}}
+                            {{#if data.password0}}
                                 <p class="error">**Password required</p>
                             {{/if}}
-                            <input type="password" id="password" name="password" placeholder="Create a Password">
+                            {{#if data.password1}}
+                                <p class="error">**Incorrect password</p>
+                            {{/if}}
+                            <input type="password" id="password" name="password" placeholder="Password">
                             <input class="submit" id="login-submit" type="submit" value="Sign Up">
                         </form>
                     </div>
