@@ -24,35 +24,57 @@ var userSchema = new Schema({
 
 var User = mongoose.model("web322_assignment.users", userSchema);
 
-function findUser(userEmail, errorData) {
-    User.findOne({email: userEmail})
-    .exec()
-    .then((user) => {
-        if (user) {
-            console.log("user found")
-        } else {
-            console.log("user not found")
-            errorData.email2 = true;
-        }
-    })
+function findUser(userEmail) {
+    return User.findOne({email: userEmail}).exec();
 }
 
-function checkPassword(userEmail, userPassword, errorData) {
-    User.findOne({email: userEmail})
-    .exec()
-    .then((user) => {
-        if (user) {
-            if (bcrypt.compareSync(userPassword, user.password)) {
-                console.log("password match")
-            } else {
-                console.log("password not match")
-                errorData.password1 = true;
-            }
+function checkNewUser(user, errorData) {
+    if (user) {
+        errorData.email2 = true;
+    }
+}
+
+function checkExistingUser(user, userPassword, errorData) {
+    if (!user) {
+        errorData.email2 = true;
+    } else {
+        if (!bcrypt.compareSync(userPassword, user.password)) {
+            errorData.password1 = true;
         }
+    }
+}
+
+function createHash(password) {
+    var salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password, salt);
+}
+
+function createUser(formData) {
+    var newUser = new User ({
+        email: formData.email,
+        firstName: formData.fname,
+        lastName: formData.lname,
+        password: createHash(formData.password),
+        birthday: formData.month + " " + formData.day + ", " + formData.year
+    })
+    return newUser;
+}
+
+function saveUser(user) {
+    user.save((err) => {
+        if (err) {
+            console.log(`There was an error saving ` + user.firstName + `'s account ${err}`)
+        } else {
+            console.log(user.firstName + "'s account was saved to the database.")
+        }
+        process.exit();
     })
 }
 
 module.exports = {
     findUser: findUser,
-    checkPassword: checkPassword
+    checkNewUser: checkNewUser,
+    checkExistingUser: checkExistingUser,
+    createUser: createUser,
+    saveUser: saveUser
 }

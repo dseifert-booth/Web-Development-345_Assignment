@@ -3,20 +3,14 @@ const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 var app = express();
 var path = require('path');
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
-var Schema = mongoose.Schema;
+var clientSessions = require("client-sessions");
 
 var val = require("./validate.js");
 var user = require("./user.js");
 var route = require("./routes/routes.js");
 
-mongoose.connect("mongodb+srv://dseifert-booth:Nintendo!34435@senecaweb322.qt5gp.mongodb.net/web322_assignment?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+var admin = false;
 
-var signedIn = false;
 var errorData = {
     email1: false,
     email2: false,
@@ -63,71 +57,62 @@ function onHttpStart() {
     console.log("Express Server is listening on :" + HTTP_PORT)
 }
 
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+        res.redirect("/login");
+    } else {
+        next();
+    }
+}
+
 app.use(express.static(path.join(__dirname, 'static')));
+
+app.use(clientSessions({
+    cookieName: "session",
+    secret: "pvWJ50126viCTU5ca%2g",
+    duration: 5 * 60 * 1000,
+    activeDuration: 2 * 60 * 1000
+}));
+
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/", function(req, res) {
     val.setEmpty(errorData);
-    res.render("index", {
-        signedIn: false,
-        layout: false
-    });
+    route.load(res, req, admin, "index");
 });
 
 app.get("/index", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, signedIn, "index");
+    route.load(res, req, admin, "index");
 });
 
 app.get("/listing", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, signedIn, "listing");
+    route.load(res, req, admin, "listing");
 });
 
 app.get("/register", function(req, res) {
     val.setEmpty(errorData);
-    res.render("register", {
-        signedIn: false,
-        layout: false
-    })
+    route.load(res, false, false, "register");
 });
 
-app.post("/register-user", function(req, res) {
+app.post("/register", async function(req, res) {
     val.setEmpty(errorData);
     const formData = req.body;
-    
+    var newUser;
+
     errorData = val.validateRegister(formData, errorData);
 
     if (!errorData.email1) {
-        User.find({email: formData.email})
-        .exec()
-        .then((user) => {
-            if (user) {
-                errorData.email2 = true;
-            }
-        })
+        newUser = await user.findUser(formData.email);
+        user.checkNewUser(newUser, errorData);
     }
     
     if (val.checkValid(errorData)) {
 
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(formData.password, salt);
+        newUser = user.createUser(formData);
 
-        var newUser = new User({
-            email: formData.email,
-            firstName: formData.fname,
-            lastName: formData.lname,
-            password: hash,
-            birthday: formData.month + " " + formData.day + ", " + formData.year
-        })
-
-        newUser.save((err) => {
-            if (err) {
-                console.log(`There was an error saving ` + newUser.firstName + `'s account ${err}`)
-            } else {
-                console.log(newUser.firstName + "'s account was saved to the database.")
-            }
-            process.exit();
-        })
+        user.saveUser(newUser);
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -153,66 +138,55 @@ app.post("/register-user", function(req, res) {
             }
         })
 
-        signedIn = true;
-
         res.redirect("dashboard");
     } else {
-        res.render("register", {
-            data: errorData,
-            signedIn: false,
-            layout: false
-        })
+        res.redirect("register");
     }
 })
 
-app.get("/dashboard", function(req, res) {
+app.get("/dashboard", ensureLogin, function(req, res) {
     val.setEmpty(errorData);
-    res.render("dashboard", {
-        signedIn: true,
-        layout: false
-    })
+    console.log("sending to dashboard");
+    route.load(res, req, admin, "dashboard");
 })
 
 app.get("/logout", function(req, res) {
-    signedIn = false;
+    req.session.reset();
     res.redirect("index")
 })
 
 app.get("/login", function(req, res) {
     val.setEmpty(errorData);
-    res.render("login", {
-        signedIn: false,
-        layout: false
-    })
+    route.load(res, false, false, "login");
 });
 
-app.post("/signin", function(req, res) {
+app.post("/login", async function(req, res) {
     val.setEmpty(errorData);
     const formData = req.body;
-    var admin = false;
-
+    var oldUser;
     errorData = val.validateLogin(formData, errorData);
 
     if (!errorData.email1) {
-        user.findUser(formData.email, errorData);
-        user.checkPassword(formData.email, formData.password, errorData)
-        console.log("After finding user: ");
-        console.log(errorData);
+        oldUser = await user.findUser(formData.email);
+        user.checkExistingUser(oldUser, formData.password, errorData);
     }
 
-    console.log("After error checks: ");
-    console.log(errorData);
-
     if (val.checkValid(errorData)) {
-        //console.log(errorData);
+        if (oldUser.admin) {
+            admin = true;
+        }
+        req.session.user = {
+            email: oldUser.email,
+            firstName: oldUser.firstName,
+            lastName: oldUser.lastName,
+            birthday: oldUser.birthday,
+            admin: oldUser.admin
+        };
+
+        console.log("signed in");
         res.redirect("dashboard");
     } else {
-        console.log("Errors found");
-        res.render("login", {
-            data: errorData,
-            signedIn: false,
-            layout: false
-        })
+        res.redirect("login");
     }
 });
 

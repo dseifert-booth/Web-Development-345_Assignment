@@ -2,15 +2,15 @@ var express = require('express');
 var app = express();
 var path = require("path");
 
-function load(res, signedIn, file) {
-    if (signedIn) {
+function load(res, req, admin, file) {
+    if (req) {
         res.render(file, {
-            signedIn: true,
+            user: req.session.user,
             layout: false
         });
     } else {
         res.render(file, {
-            signedIn: false,
+            user: false,
             layout: false
         });
     }

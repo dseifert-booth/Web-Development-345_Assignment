@@ -27,11 +27,7 @@
                         <i class="fas fa-globe"></i>
                         <div id="login">
                             <i class="fas fa-bars"></i>
-                            {{#if signedIn}}
-                                <a href="/dashboard"><i class="fas fa-user-circle"></i></a>
-                            {{else}}
-                                <a href="/login"><i class="fas fa-user-circle"></i></a>
-                            {{/if}}
+                            <a href="/login"><i class="fas fa-user-circle"></i></a>
                         </div>
                     </aside>
                 </div>
@@ -42,7 +38,7 @@
                     <div id="register-master">
                         <p class="center">Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                         <p class="center positioned"><span>or</span></p>
-                        <form id="signup-form" action="/register-user" method="POST">
+                        <form id="signup-form" action="/register" method="POST">
                             {{#if data.email1}}
                                 <p class="error">**Email address required</p>
                             {{/if}}

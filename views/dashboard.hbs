@@ -34,8 +34,9 @@
             </header>
             <div class="main-body">
                 <section id="dashboard">
-                    <h1>Your Dashboard</h1>
+                    <h1>{{#if user.admin}}Admin{{else}}User{{/if}} Dashboard</h1>
                     <div id="dashboard-master">
+                        <h3>{{user.firstName}} {{user.lastName}}</h2>
                         <a id="logout" href="/logout">Log Out</a>
                     </div>
                 </section>
