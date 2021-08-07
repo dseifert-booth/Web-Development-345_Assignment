@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require("path");
 
-function load(res, req, admin, file) {
+function load(res, req, file) {
     if (req) {
         res.render(file, {
             user: req.session.user,

@@ -23,23 +23,6 @@ var errorData = {
     bday: false
 }
 
-// var userSchema = new Schema({
-//     "email": {
-//         "type": String,
-//         "unique": true
-//     },
-//     "firstName": String,
-//     "lastName": String,
-//     "password": String,
-//     "birthday": String,
-//     "admin": {
-//         "type": Number,
-//         "default": 0
-//     }
-// })
-
-//var User = mongoose.model("web322_assignment.users", userSchema);
-
 app.use(express.urlencoded({ extended: true }));
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
@@ -74,26 +57,36 @@ app.use(clientSessions({
     activeDuration: 2 * 60 * 1000
 }));
 
+function createSession(req, sessionUser) {
+    req.session.user = {
+        email: sessionUser.email,
+        firstName: sessionUser.firstName,
+        lastName: sessionUser.lastName,
+        birthday: sessionUser.birthday,
+        admin: sessionUser.admin
+    }
+}
+
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, req, admin, "index");
+    route.load(res, req, "index");
 });
 
 app.get("/index", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, req, admin, "index");
+    route.load(res, req, "index");
 });
 
 app.get("/listing", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, req, admin, "listing");
+    route.load(res, req, "listing");
 });
 
 app.get("/register", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, false, false, "register");
+    route.load(res, false, "register");
 });
 
 app.post("/register", async function(req, res) {
@@ -138,6 +131,8 @@ app.post("/register", async function(req, res) {
             }
         })
 
+        createSession(req, newUser);
+
         res.redirect("dashboard");
     } else {
         res.redirect("register");
@@ -146,44 +141,38 @@ app.post("/register", async function(req, res) {
 
 app.get("/dashboard", ensureLogin, function(req, res) {
     val.setEmpty(errorData);
-    console.log("sending to dashboard");
-    route.load(res, req, admin, "dashboard");
+    route.load(res, req, "dashboard");
 })
 
 app.get("/logout", function(req, res) {
     req.session.reset();
-    res.redirect("index")
+    res.redirect("index");
 })
 
 app.get("/login", function(req, res) {
     val.setEmpty(errorData);
-    route.load(res, false, false, "login");
+    route.load(res, false, "login");
 });
 
 app.post("/login", async function(req, res) {
     val.setEmpty(errorData);
     const formData = req.body;
-    var oldUser;
+    var existingUser;
+
     errorData = val.validateLogin(formData, errorData);
 
     if (!errorData.email1) {
-        oldUser = await user.findUser(formData.email);
-        user.checkExistingUser(oldUser, formData.password, errorData);
+        existingUser = await user.findUser(formData.email);
+        user.checkExistingUser(existingUser, formData.password, errorData);
     }
 
     if (val.checkValid(errorData)) {
-        if (oldUser.admin) {
+        if (existingUser.admin) {
             admin = true;
         }
-        req.session.user = {
-            email: oldUser.email,
-            firstName: oldUser.firstName,
-            lastName: oldUser.lastName,
-            birthday: oldUser.birthday,
-            admin: oldUser.admin
-        };
+        
+        createSession(req, existingUser);
 
-        console.log("signed in");
         res.redirect("dashboard");
     } else {
         res.redirect("login");

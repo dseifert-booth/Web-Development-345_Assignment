@@ -1,8 +1,9 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 
-mongoose.connect("mongodb+srv://dseifert-booth:Nintendo!34435@senecaweb322.qt5gp.mongodb.net/web322_assignment?retryWrites=true&w=majority", {
+mongoose.connect(process.env.DB_HOST, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
@@ -22,7 +23,7 @@ var userSchema = new Schema({
     }
 })
 
-var User = mongoose.model("web322_assignment.users", userSchema);
+var User = mongoose.model("users", userSchema);
 
 function findUser(userEmail) {
     return User.findOne({email: userEmail}).exec();
