@@ -5,11 +5,10 @@ var app = express();
 var path = require('path');
 var clientSessions = require("client-sessions");
 
-var val = require("./validate.js");
-var user = require("./user.js");
+var val = require("./static/js/validate.js");
+var user = require("./static/js/user.js");
+var room = require("./static/js/room.js");
 var route = require("./routes/routes.js");
-
-var admin = false;
 
 var errorData = {
     email1: false,
@@ -24,6 +23,7 @@ var errorData = {
 }
 
 app.use(express.urlencoded({ extended: true }));
+//app.use('/js', express.static(__dirname + '/js'));
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
     helpers: { 
@@ -82,6 +82,16 @@ app.get("/index", function(req, res) {
 app.get("/listing", function(req, res) {
     val.setEmpty(errorData);
     route.load(res, req, "listing");
+});
+
+app.get("/room-display", async function(req, res) {
+    var rooms = await room.findRooms();
+    res.json(rooms);
+});
+
+app.get("/room-count", async function(req, res) {
+    const count = await room.countRooms();
+    res.json(count);
 });
 
 app.get("/register", function(req, res) {
