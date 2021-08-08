@@ -39,34 +39,34 @@
                         <p class="center">Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                         <p class="center positioned"><span>or</span></p>
                         <form id="signup-form" action="/register" method="POST">
-                            {{#if data.email1}}
+                            {{#if error.email1}}
                                 <p class="error">**Email address required</p>
                             {{/if}}
-                            {{#if data.email2}}
+                            {{#if error.email2}}
                                 <p class="error">**Email address was not unique</p>
                             {{/if}}
                             <input type="email" id="email" name="email" placeholder="Email address">
-                            {{#if data.fname}}
+                            {{#if error.fname}}
                                 <p class="error">**First name required</p>
                             {{/if}}
                             <input type="text" id="fname" name="fname" placeholder="First name">
-                            {{#if data.lname}}
+                            {{#if error.lname}}
                                 <p class="error">**Last name required</p>
                             {{/if}}
                             <input type="text" id="lname" name="lname" placeholder="Last name">
-                            {{#if data.password1}}
+                            {{#if error.password1}}
                                 <p class="error">**Password Required</p>
                             {{/if}} 
-                            {{#if data.password2}}
+                            {{#if error.password2}}
                                 <p class="error">**Password must be between 6-12 characters</p>
                             {{/if}}
-                            {{#if data.password3}}
+                            {{#if error.password3}}
                                 <p class="error">Password must have only letters AND numbers</p>
                             {{/if}}
                             <input type="password" id="password" name="password" placeholder="Create a Password">
                             <label for="month">Birthday</label>
                             <p>To sign up, you need to be at least 18. Other people who use Airbnb won't see your birthday.</p>
-                            {{#if data.bday}}
+                            {{#if error.bday}}
                                 <p class="error">Month/Day/Year required</p>
                             {{/if}}
                             <div id="birthday-select">

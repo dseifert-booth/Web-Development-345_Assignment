@@ -104,8 +104,4 @@ async function displayRooms() {
     }
 }
 
-function createRoom() {
-
-}
-
 displayRooms();

@@ -22,7 +22,16 @@ function validateRegister(body, error) {
 
 function validateLogin(body, error) {
     if (body.email == "") { error.email1 = true;}
-    if (body.password == "") {error.password0 = true;} 
+    if (body.password == "") {error.password1 = true;} 
+
+    return error;
+}
+
+function validateRoom(body, error) {
+    if (body.title == "") { error.title = true;}
+    if (body.price == "") { error.price = true;}
+    if (body.desc == "") { error.desc = true;}
+    if (body.location == "") { error.location = true;}
 
     return error;
 }
@@ -52,6 +61,7 @@ function setEmpty(error) {
 module.exports = {
     validateRegister: validateRegister,
     validateLogin: validateLogin,
+    validateRoom: validateRoom,
     checkValid: checkValid,
     setEmpty: setEmpty
 }

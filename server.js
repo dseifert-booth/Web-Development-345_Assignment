@@ -2,6 +2,7 @@ var express = require('express');
 const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 var app = express();
+const multer = require('multer');
 var path = require('path');
 var clientSessions = require("client-sessions");
 
@@ -9,21 +10,35 @@ var val = require("./static/js/validate.js");
 var user = require("./static/js/user.js");
 var room = require("./static/js/room.js");
 var route = require("./routes/routes.js");
+const { redirect } = require('statuses');
 
-var errorData = {
+var loginErrorData = {
+    email1: false,
+    email2: false,
+    password1: false,
+    password2: false
+}
+
+var registerErrorData = {
     email1: false,
     email2: false,
     fname: false,
     lname: false,
-    password0: false,
     password1: false,
     password2: false,
     password3: false,
     bday: false
 }
 
+var roomErrorData = {
+    title: false,
+    price: false,
+    desc: false,
+    location: false,
+    photo: false
+}
+
 app.use(express.urlencoded({ extended: true }));
-//app.use('/js', express.static(__dirname + '/js'));
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
     helpers: { 
@@ -39,6 +54,17 @@ var HTTP_PORT = process.env.PORT || 8080;
 function onHttpStart() {
     console.log("Express Server is listening on :" + HTTP_PORT)
 }
+
+const storage = multer.diskStorage({
+    destination: "./static/images/",
+    filename: function(req, file, cb) {
+        if (file) {
+            cb(null, Date.now() + path.extname(file.originalname));
+        }
+    }
+});
+
+const upload = multer({ storage: storage });
 
 function ensureLogin(req, res, next) {
     if (!req.session.user) {
@@ -67,21 +93,26 @@ function createSession(req, sessionUser) {
     }
 }
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function(req, res) {
-    val.setEmpty(errorData);
-    route.load(res, req, "index");
+    val.setEmpty(loginErrorData);
+    val.setEmpty(registerErrorData);
+    val.setEmpty(roomErrorData);
+    route.load(res, req, false, "index");
 });
 
 app.get("/index", function(req, res) {
-    val.setEmpty(errorData);
-    route.load(res, req, "index");
+    val.setEmpty(loginErrorData);
+    val.setEmpty(registerErrorData);
+    val.setEmpty(roomErrorData);
+    route.load(res, req, false, "index");
 });
 
 app.get("/listing", function(req, res) {
-    val.setEmpty(errorData);
-    route.load(res, req, "listing");
+    val.setEmpty(loginErrorData);
+    val.setEmpty(registerErrorData);
+    route.load(res, req, roomErrorData, "listing");
 });
 
 app.get("/room-display", async function(req, res) {
@@ -94,24 +125,46 @@ app.get("/room-count", async function(req, res) {
     res.json(count);
 });
 
+app.post("/add-room", upload.single("photo"), async (req, res) => {
+    val.setEmpty(roomErrorData);
+    const formData = req.body;
+
+    if (!req.file) {
+        roomErrorData.photo = true;
+    }
+    
+    val.validateRoom(formData, roomErrorData);
+
+    if (val.checkValid(roomErrorData)) {
+        var newRoom = await room.createRoom(formData, req.file.filename);
+        room.saveRoom(newRoom);
+        res.redirect("listing");
+    } else {
+        res.redirect("listing");
+    }
+    
+    route.load(res, req, roomErrorData, "listing");
+})
+
 app.get("/register", function(req, res) {
-    val.setEmpty(errorData);
-    route.load(res, false, "register");
+    val.setEmpty(roomErrorData);
+    route.load(res, false, registerErrorData, "register");
 });
 
 app.post("/register", async function(req, res) {
-    val.setEmpty(errorData);
+    val.setEmpty(loginErrorData);
+    val.setEmpty(registerErrorData);
     const formData = req.body;
     var newUser;
 
-    errorData = val.validateRegister(formData, errorData);
+    registerErrorData = val.validateRegister(formData, registerErrorData);
 
-    if (!errorData.email1) {
+    if (!registerErrorData.email1) {
         newUser = await user.findUser(formData.email);
-        user.checkNewUser(newUser, errorData);
+        user.checkNewUser(newUser, registerErrorData);
     }
     
-    if (val.checkValid(errorData)) {
+    if (val.checkValid(registerErrorData)) {
 
         newUser = user.createUser(formData);
 
@@ -150,8 +203,10 @@ app.post("/register", async function(req, res) {
 })
 
 app.get("/dashboard", ensureLogin, function(req, res) {
-    val.setEmpty(errorData);
-    route.load(res, req, "dashboard");
+    val.setEmpty(loginErrorData);
+    val.setEmpty(registerErrorData);
+    val.setEmpty(roomErrorData);
+    route.load(res, req, false, "dashboard");
 })
 
 app.get("/logout", function(req, res) {
@@ -160,26 +215,24 @@ app.get("/logout", function(req, res) {
 })
 
 app.get("/login", function(req, res) {
-    val.setEmpty(errorData);
-    route.load(res, false, "login");
+    val.setEmpty(registerErrorData);
+    val.setEmpty(roomErrorData);
+    route.load(res, false, loginErrorData, "login");
 });
 
 app.post("/login", async function(req, res) {
-    val.setEmpty(errorData);
+    val.setEmpty(loginErrorData);
     const formData = req.body;
     var existingUser;
 
-    errorData = val.validateLogin(formData, errorData);
+    loginErrorData = val.validateLogin(formData, loginErrorData);
 
-    if (!errorData.email1) {
+    if (!loginErrorData.email1) {
         existingUser = await user.findUser(formData.email);
-        user.checkExistingUser(existingUser, formData.password, errorData);
+        user.checkExistingUser(existingUser, formData.password, loginErrorData);
     }
 
-    if (val.checkValid(errorData)) {
-        if (existingUser.admin) {
-            admin = true;
-        }
+    if (val.checkValid(loginErrorData)) {
         
         createSession(req, existingUser);
 

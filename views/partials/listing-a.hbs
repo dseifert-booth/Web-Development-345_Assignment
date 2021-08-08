@@ -1,3 +1,27 @@
 <section id="admin-listing">
-
+    <form id="add-room" action="/add-room" method="POST" enctype="multipart/form-data">
+        {{#if error.title}}
+            <p class="error">**Room must have title</p>
+        {{/if}}
+        <label for="title">Title of Room:</label>
+        <input type="text" name="title" id="title" placeholder="Title">
+        {{#if error.price}}
+            <p class="error">**Room must have price</p>
+        {{/if}}
+        <label for="price">Room Price:</label>
+        <input type="text" name="price" id="price" placeholder="Price">
+        <label for="desc">Room Description:</label>
+        <textarea name="desc" id="desc" cols="30" rows="10" placeholder="Description"></textarea>
+        {{#if error.title}}
+            <p class="error">**Room must have location</p>
+        {{/if}}
+        <label for="location">Room Location:</label>
+        <input type="text" name="location" id="location" placeholder="location">
+        {{#if error.title}}
+            <p class="error">**Room must have photo</p>
+        {{/if}}
+        <label for="photo">Room Photo:</label>
+        <input type="file" name="photo" id="photo">
+        <input class="submit" id="add-room-submit" type="submit" value="Add Room">
+    </form>
 </section>

@@ -28,7 +28,7 @@ function findUser(userEmail) {
 
 function checkNewUser(user, errorData) {
     if (user) {
-        errorData.email2 = true;
+        errorData.email1 = true;
     }
 }
 
@@ -37,7 +37,7 @@ function checkExistingUser(user, userPassword, errorData) {
         errorData.email2 = true;
     } else {
         if (!bcrypt.compareSync(userPassword, user.password)) {
-            errorData.password1 = true;
+            errorData.password2 = true;
         }
     }
 }

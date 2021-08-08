@@ -383,6 +383,14 @@ footer {
     color: #444;
 }
 
+/*----------------------*/
+/* Listing Admin Styles */
+/*----------------------*/
+
+#admin-listing {
+    width: 20%;
+}
+
 /*-----------------------*/
 /* Register/Login Styles */
 /*-----------------------*/
@@ -441,7 +449,8 @@ footer {
 }
 
 #signup-form .error,
-#login-form .error {
+#login-form .error,
+#add-room .error {
     margin: 0;
     color: #F22;
 }

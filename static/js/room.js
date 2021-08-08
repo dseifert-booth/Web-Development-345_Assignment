@@ -32,7 +32,35 @@ function countRooms() {
     return Room.countDocuments();
 }
 
+function createRoom(data, fileName) {
+    var newRoom = new Room ({
+        title: data.title,
+        price: data.price,
+        description: data.desc,
+        location: data.location,
+        photo: "/images/" + fileName,
+        rating: 0.00,
+        numRating: 0,
+        plus: false,
+        super: false
+    })
+
+    return newRoom;
+}
+
+function saveRoom(room) {
+    room.save((err) => {
+        if (err) {
+            console.log(`There was an error saving ` + room.title + `'s account ${err}`)
+        } else {
+            console.log(room.title + "'s account was saved to the database.")
+        }
+    })
+}
+
 module.exports = {
     findRooms: findRooms,
-    countRooms: countRooms
+    countRooms: countRooms,
+    createRoom: createRoom,
+    saveRoom: saveRoom
 }
