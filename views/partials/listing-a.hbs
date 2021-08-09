@@ -9,14 +9,14 @@
             <p class="error">**Room must have price</p>
         {{/if}}
         <label for="price">Room Price:</label>
-        <input type="text" name="price" id="price" placeholder="Price">
+        <input type="number" name="price" id="price" min="1" placeholder="Price" value="$">
         <label for="desc">Room Description:</label>
-        <textarea name="desc" id="desc" cols="30" rows="10" placeholder="Description"></textarea>
+        <textarea name="desc" id="desc" cols="30" rows="3" placeholder="Description"></textarea>
         {{#if error.title}}
             <p class="error">**Room must have location</p>
         {{/if}}
         <label for="location">Room Location:</label>
-        <input type="text" name="location" id="location" placeholder="location">
+        <input type="text" name="location" id="location" placeholder="Location">
         {{#if error.title}}
             <p class="error">**Room must have photo</p>
         {{/if}}

@@ -24,12 +24,20 @@ var roomSchema = new Schema({
 
 var Room = mongoose.model("rooms", roomSchema);
 
-function findRooms() {
-    return Room.find().exec();
+function findRooms(location) {
+    if (location) {
+        return Room.find({"location": location}).exec();
+    } else {
+        return Room.find().exec();
+    }
 }
 
-function countRooms() {
-    return Room.countDocuments();
+function countRooms(location) {
+    if (location) {
+        return Room.countDocuments({"location": location});
+    } else {
+        return Room.countDocuments();
+    }
 }
 
 function createRoom(data, fileName) {

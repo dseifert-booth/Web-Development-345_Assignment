@@ -383,12 +383,45 @@ footer {
     color: #444;
 }
 
+/*-----------------------*/
+/* Listing Search Styles */
+/*-----------------------*/
+
+#listing-search {
+    width: 20%;
+
+    margin: 30px 40%;
+
+    display: flex;
+    justify-content: center;
+}
+
+#listing-search>form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#listing-search>form>input {
+    width: 30%;
+}
+
 /*----------------------*/
 /* Listing Admin Styles */
 /*----------------------*/
 
 #admin-listing {
-    width: 20%;
+    width: 30%;
+    margin: 30px 35%;
+}
+
+#admin-listing>form {
+    display: flex;
+    flex-direction: column;
+}
+
+#photo {
+    border: none;
 }
 
 /*-----------------------*/

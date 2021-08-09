@@ -11,6 +11,7 @@ var user = require("./static/js/user.js");
 var room = require("./static/js/room.js");
 var route = require("./routes/routes.js");
 const { redirect } = require('statuses');
+const { addAbortSignal } = require('stream');
 
 var loginErrorData = {
     email1: false,
@@ -124,6 +125,17 @@ app.get("/room-count", async function(req, res) {
     const count = await room.countRooms();
     res.json(count);
 });
+// aaa.com/room-display?roomid=7&lang=en
+// $_GET['roomid'] = 7
+// $_GET['lang'] = 'en'
+// req.query.roomid = 7
+app.get("/search-rooms", async function(req, res) {
+    var listing = {
+        rooms: await room.findRooms(req.query.location),
+        count: await room.countRooms(req.query.location)
+    }
+    res.json(listing);
+})
 
 app.post("/add-room", upload.single("photo"), async (req, res) => {
     val.setEmpty(roomErrorData);
@@ -132,7 +144,7 @@ app.post("/add-room", upload.single("photo"), async (req, res) => {
     if (!req.file) {
         roomErrorData.photo = true;
     }
-    
+
     val.validateRoom(formData, roomErrorData);
 
     if (val.checkValid(roomErrorData)) {

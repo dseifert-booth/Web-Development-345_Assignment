@@ -22,7 +22,9 @@ function setLocation(location, plus) {
         var spanPlus = document.createElement("span");
         spanPlus.innerText = "Plus";
         roomLocation.appendChild(spanPlus);
-        roomLocation.insertAdjacentHTML('beforeend'," ");
+        roomLocation.insertAdjacentHTML('beforeend'," Verified - ");
+    } else {
+        roomLocation.insertAdjacentHTML('beforeend', "Entire Apartment - ");
     }
     roomLocation.insertAdjacentHTML('beforeend', location);
     return roomLocation;
@@ -36,7 +38,7 @@ function setTitle(title) {
 
 function setPrice(price) {
     var roomPrice = document.createElement("p");
-    roomPrice.innerHTML = price;
+    roomPrice.insertAdjacentHTML('beforeend', "$" + price + " CAD/night");
     return roomPrice;
 }
 
@@ -44,6 +46,9 @@ function setRating(rating) {
     var roomRating = document.createElement("p");
     roomRating.className = "rating";
     roomRating.innerHTML = rating;
+    if (rating % 1 == 0) {
+        roomRating.insertAdjacentHTML('beforeend', ".00");
+    }
     return roomRating;
 }
 
@@ -89,9 +94,20 @@ function setRoomDetails(room) {
     return roomDetails;
 }
 
-async function displayRooms() {
-    const listing = await getListing();
+async function displayRooms(fetchedListing) {
+    var listing;
+    
+    if (fetchedListing) {
+        listing = fetchedListing;
+    } else {
+        listing = await getListing();
+    }
+
     const roomDiv = document.getElementById("listing-master");
+
+    while (roomDiv.lastChild) {
+        roomDiv.removeChild(roomDiv.lastChild);
+    }
 
     for (i = 0; i < listing.count; i++) {
         var roomCard = document.createElement("article");
@@ -101,6 +117,30 @@ async function displayRooms() {
         roomCard.appendChild(setRoomDetails(listing.rooms[i]));
 
         roomDiv.appendChild(roomCard);
+    }
+}
+
+async function searchRooms() {
+    var location = document.getElementById("s-locations").value;
+    
+    if (location != "Search") {
+        var listing = {
+            rooms: this.rooms,
+            count: this.count
+        };
+        var fetchString = "/search-rooms?location=" + location;
+    
+        await fetch(fetchString)
+        .then(response => response.json())
+        .then(data => {
+            listing.rooms = data.rooms;
+            listing.count = data.count;
+        });
+    
+        console.log(listing);
+        displayRooms(listing);
+    } else {
+        displayRooms();
     }
 }
 
