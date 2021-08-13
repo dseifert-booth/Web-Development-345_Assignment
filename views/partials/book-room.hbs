@@ -1,0 +1,57 @@
+<aside id="rd-book">
+    <h4 id="rd-price"></h4>
+    <form id="book-form" action="/room-desc" method="POST">
+        {{#if error.login}}
+            <p class="error">**Must be logged in to book a room!</p>
+        {{/if}}
+        {{#if error.dates1}}
+            <p class="error">**Both dates must be selected!</p>
+        {{/if}}
+        {{#if error.dates2}}
+            <p class="error">**Invalid dates selected!</p>
+        {{/if}}
+        {{#if error.guests}}
+            <p class="error">**Must select number of guests!</p>
+        {{/if}}
+        <div id="rd-dates">
+            <div>
+                <label for="checkin">Check-in</label>
+                <input type="date" name="checkin" id="checkin">
+            </div>
+            <div>
+                <label for="checkin">Checkout</label>
+                <input type="date" name="checkout" id="checkout">
+            </div>
+        </div>
+        <label for="guests">Guests</label>
+        <select name="guests" id="guests">
+            <option value="default">Select # of Guests</option>
+            <option value="1">1 guest</option>
+            <option value="2">2 guests</option>
+        </select>
+        <input type="submit" class="submit" id="book-submit" value="Reserve">
+        <p id="not-charged">You won't be charged yet</p>
+        <table id="rd-book-charges">
+            <tr>
+                <td><p class="book-charge" id="rd-book-acc">Accomodations</p></td>
+                <td><p id="rd-acc-fee">$(n/a)</p></td>
+            </tr>
+            <tr>
+                <td><p class="book-charge" id="rd-book-dis">Discount</p></td>
+                <td><p id="rd-dis-tot">$0</p></td>
+            </tr>
+            <tr>
+                <td><p class="book-charge" id="rd-book-cln">Cleaning Fee</p></td>
+                <td><p id="rd-cln-fee">$70</p></td>
+            </tr>
+            <tr>
+                <td><p class="book-charge" id="rd-book-srv">Service Fee</p></td>
+                <td><p id="rd-srv-fee">$60</p></td>
+            </tr>
+        </table>
+        <div id="rd-book-total">
+            <p>Total:</p>
+            <p id="rd-total">$(n/a)</p>
+        </div>
+    </form>
+</aside>

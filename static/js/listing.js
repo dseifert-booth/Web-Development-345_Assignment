@@ -135,15 +135,19 @@ async function displayRooms(fetchedListing) {
 }
 
 async function searchRooms() {
+    console.log("search #1");
     var location = document.getElementById("s-locations").value;
     
     if (location != "Search") {
+        console.log("search #2");
         var listing = {
             rooms: this.rooms,
             count: this.count
         };
         var fetchString = "/search-rooms?location=" + location;
     
+        console.log(fetchString);
+
         await fetch(fetchString)
         .then(response => response.json())
         .then(data => {
@@ -151,6 +155,7 @@ async function searchRooms() {
             listing.count = data.count;
         });
     
+        console.log("search #3");
         console.log(listing);
         displayRooms(listing);
     } else {

@@ -139,10 +139,13 @@ app.get("/room-count", async function(req, res) {
 });
 
 app.get("/search-rooms", async function(req, res) {
+    console.log("server #1");
+    console.log(req.query.location);
     var listing = {
-        rooms: await dbRoom.findRooms("location", req.query.location),
-        count: await dbRoom.countRooms("location", req.query.location)
+        rooms: await dbRoom.findRooms(req.query.location),
+        count: await dbRoom.countRooms(req.query.location)
     }
+    console.log(listing);
     res.json(listing);
 })
 

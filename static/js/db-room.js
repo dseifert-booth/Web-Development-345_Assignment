@@ -31,7 +31,9 @@ function getRoom(roomNum) {
 }
 
 function findRooms(location) {
+        console.log("dbroom #1");
     if (location) {
+        console.log(location);
         return Room.find({"location": location}).exec();
     } else {
         return Room.find().exec();
@@ -47,11 +49,10 @@ function countRooms(location) {
 }
 
 async function createRoom(data, fileName) {
-    var lastRoomNumber;
-    await Room.find().sort({roomNum: -1}).limit(1)
+    var room = await Room.find().sort({roomNum: -1}).limit(1)
     .exec()
-    .then(response => response.json())
-    .then(data => lastRoomNumber = data.roomNum);
+    var lastRoomNumber = room[0].roomNum;
+
     var newRoom = new Room ({
         roomNum : lastRoomNumber + 1,
         title: data.title,
