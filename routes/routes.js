@@ -3,7 +3,6 @@ var app = express();
 var path = require("path");
 
 function load(res, req, error, file) {
-    console.log(error);
     if (req) {
         res.render(file, {
             user: req.session.user,

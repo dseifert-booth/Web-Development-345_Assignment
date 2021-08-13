@@ -36,6 +36,21 @@ function validateRoom(body, error) {
     return error;
 }
 
+function validateBooking(body, error) {
+    if (body.checkin == "" || body.checkout == "") { 
+        error.dates1 = true;
+    } else {
+        var cinDate = new Date(body.checkin);
+        var coutDate = new Date(body.checkout);
+        if ((coutDate.getTime() - cinDate.getTime()) <= 0) {
+            error.dates2 = true;
+        }
+    }
+    if (body.guests == "default") {error.guests = true;}
+
+    return error;
+}
+
 function checkValid(error) {
     var valid = true;
 
@@ -62,6 +77,7 @@ module.exports = {
     validateRegister: validateRegister,
     validateLogin: validateLogin,
     validateRoom: validateRoom,
+    validateBooking: validateBooking,
     checkValid: checkValid,
     setEmpty: setEmpty
 }

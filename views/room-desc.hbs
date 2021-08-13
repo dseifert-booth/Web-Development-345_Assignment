@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Title Pending</title> {{!-- <Name of Room> Description --}}
+        <link rel="stylesheet" type="text/css" href="/styles/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/0c5d9ba0ef.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <main id="desc-page">
+            <div id="covid-banner">
+                <a href="#">Get the latest on our COVID-19 response</a>
+            </div>
+            <header>
+                <div id="nav-area">
+                    <div id="logo">
+                        <i class="fab fa-airbnb"></i>
+                        <p>airbnb</p>
+                    </div>
+                    <nav>
+                        <a href="/index">Home</a>
+                        <a href="/listing">Listings</a>
+                        {{#if user}}
+                            <a href="/dashboard">Dashboard</a>
+                        {{else}}
+                            <a href="/register">Register</a>
+                        {{/if}}
+                    </nav>
+                    <aside id="host-language-login">
+                        <p>Become a Host</p>
+                        <i class="fas fa-globe"></i>
+                        <div id="login">
+                            <i class="fas fa-bars"></i>
+                            {{#if user}}
+                                <a href="/dashboard"><i class="fas fa-user-circle"></i></a>
+                            {{else}}
+                                <a href="/login"><i class="fas fa-user-circle"></i></a>
+                            {{/if}}
+                        </div>
+                    </aside>
+                </div>
+            </header>
+            <div class="main-body">
+                <section id="rd-top">
+                    <div id="rd-header">
+                        <h3 id="rd-roomnum">Room #</h3>
+                        <div id="rd-header-details">
+                            <p id="rd-location"></p>
+                            <div id="rd-header-links">
+                                <p><i class="fas fa-share-square"></i> Share</p>
+                                <p><i class="far fa-heart"></i> Save</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rd-images">
+                        <div id="main-img"></div>
+                        <div id="rd-img-grid"></div>
+                    </div>
+                </section>
+                <section id="rd-bottom">
+                    <article id="rd-details">
+                        <div id="detail-1" class="rd-detail">
+                            <h4 id="rd-title"> - hosted by Darius</h4>
+                            <p>2 guests - 2 bedrooms - 2 beds - 2 shared baths</p>
+                        </div>
+                        <div id="detail-2" class="rd-detail">
+                            <div>
+                                <i class="detail-icon fas fa-wifi"></i>
+                                <div>
+                                    <h4>Amenities for everyday living</h5>
+                                    <p>The host has equipped this place for long stays - kitchen, wifi, washer, and dryer included.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <i class="detail-icon far fa-calendar"></i>
+                                <div>
+                                    <h4>Free cancellation for 48 hours</h4>
+                                    <p>After that, cancel before 4:00 PM on Oct. 15 and get a full refund, minus the first 30 days and the service fee.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="detail-3" class="rd-detail">
+                            <p id="rd-desc"></p>
+                            <p>Contact Host</p>
+                        </div>
+                    </article>
+                    <aside id="rd-book">
+                        <h4 id="rd-price"></h4>
+                        <form id="book-form" action="/room-desc" method="POST">
+                            {{#if error.login}}
+                                <p class="error">**Must be logged in to book a room!</p>
+                            {{/if}}
+                            {{#if error.dates1}}
+                                <p class="error">**Both dates must be selected!</p>
+                            {{/if}}
+                            {{#if error.dates2}}
+                                <p class="error">**Invalid dates selected!</p>
+                            {{/if}}
+                            {{#if error.guests}}
+                                <p class="error">**Must select number of guests!</p>
+                            {{/if}}
+                            <div id="rd-dates">
+                                <div>
+                                    <label for="checkin">Check-in</label>
+                                    <input type="date" name="checkin" id="checkin">
+                                </div>
+                                <div>
+                                    <label for="checkin">Checkout</label>
+                                    <input type="date" name="checkout" id="checkout">
+                                </div>
+                            </div>
+                            <label for="guests">Guests</label>
+                            <select name="guests" id="guests">
+                                <option value="default">Select # of Guests</option>
+                                <option value="1">1 guest</option>
+                                <option value="2">2 guests</option>
+                            </select>
+                            <input type="submit" class="submit" id="book-submit" value="Reserve">
+                            <p id="not-charged">You won't be charged yet</p>
+                            <table id="rd-book-charges">
+                                <tr>
+                                    <td><p class="book-charge" id="rd-book-acc">Accomodations</p></td>
+                                    <td><p id="rd-acc-fee">$(n/a)</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="book-charge" id="rd-book-dis">Discount</p></td>
+                                    <td><p id="rd-dis-tot">$0</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="book-charge" id="rd-book-cln">Cleaning Fee</p></td>
+                                    <td><p id="rd-cln-fee">$70</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="book-charge" id="rd-book-srv">Service Fee</p></td>
+                                    <td><p id="rd-srv-fee">$60</p></td>
+                                </tr>
+                            </table>
+                            <div id="rd-book-total">
+                                <p>Total:</p>
+                                <p id="rd-total">$(n/a)</p>
+                            </div>
+                        </form>
+                    </aside>
+                </section>
+            </div>
+            <footer>
+                <div id="footer-left">
+                    <p>© 2021 Airbnb, Inc.</p>
+                    <p>Privacy</p>
+                    <p>Terms</p>
+                    <p>Sitemap</p>
+                </div>
+                <div id="footer-right">
+                    <div class="footer-bar" id="language">
+                        <i class="fas fa-globe"></i>
+                        <p>English (CA)</p>
+                    </div>
+                    <div class="footer-bar" id="currency">
+                        <p>$ <span>CAD</span></p>
+                    </div>
+                    <div class="footer-bar" id="socials">
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+            </footer>
+        </main>
+        <script src="/js/room-desc.js"></script>
+    </body>
+</html>

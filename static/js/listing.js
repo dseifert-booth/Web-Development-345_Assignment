@@ -30,9 +30,20 @@ function setLocation(location, plus) {
     return roomLocation;
 }
 
-function setTitle(title) {
+function setTitle(title, roomNum, booked) {
     var roomTitle = document.createElement("h4");
-    roomTitle.innerHTML = title;
+    var roomLink = document.createElement("a");
+    roomLink.innerHTML = title;
+    
+    if (!booked) {
+        roomLink.setAttribute("id", "ls-not-booked");
+        roomLink.setAttribute('href', "/room-desc?room=" + roomNum)
+    } else {
+        roomLink.insertAdjacentHTML('beforeend', " (Booked!)");
+    }
+
+    
+    roomTitle.appendChild(roomLink);
     return roomTitle;
 }
 
@@ -76,9 +87,12 @@ function setRatingDetails(room) {
     return roomRatingDetails;
 }
 
-function setImage(photo) {
+function setImage(photo, booked) {
     var roomImage = document.createElement("img");
     roomImage.setAttribute("src", photo);
+    if (booked) {
+        roomImage.style.filter = "grayscale(100%)"
+    }
     return roomImage;
 }
 
@@ -87,7 +101,7 @@ function setRoomDetails(room) {
     roomDetails.className = "card-details";
 
     roomDetails.appendChild(setLocation(room.location, room.plus));
-    roomDetails.appendChild(setTitle(room.title));
+    roomDetails.appendChild(setTitle(room.title, room.roomNum, room.booked));
     roomDetails.appendChild(setPrice(room.price));
     roomDetails.appendChild(setRatingDetails(room));
 
@@ -113,7 +127,7 @@ async function displayRooms(fetchedListing) {
         var roomCard = document.createElement("article");
         roomCard.className = "room-card";
 
-        roomCard.appendChild(setImage(listing.rooms[i].photo));
+        roomCard.appendChild(setImage(listing.rooms[i].photo, listing.rooms[i].booked));
         roomCard.appendChild(setRoomDetails(listing.rooms[i]));
 
         roomDiv.appendChild(roomCard);
